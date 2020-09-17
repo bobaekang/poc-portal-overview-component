@@ -13,14 +13,17 @@ function fetchData({ token, query }) {
   }).then((response) => response.json());
 }
 
-function IndexOverview({ isFetching, setIsFetching, token }) {
+function IndexOverview({ isFetching, setIsFetching, setIsError, token }) {
   const [subject, setSubject] = useState(0);
 
   useEffect(() => {
     if (isFetching)
       fetchData({ token, query: `{ _inrg_count }` })
         .then(({ data }) => setSubject(data._inrg_count))
-        .catch((e) => console.error(e))
+        .catch((e) => {
+          setIsError(true);
+          console.error(e);
+        })
         .finally(() => setIsFetching(false));
   }, [isFetching]); // eslint-disable-line react-hooks/exhaustive-deps
 

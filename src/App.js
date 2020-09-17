@@ -6,6 +6,7 @@ const storage = window.sessionStorage;
 function App() {
   const [token, setToken] = useState("");
   const [isFetching, setIsFetching] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const savedToken = storage.getItem("saved_token");
@@ -26,12 +27,34 @@ function App() {
           value={token}
         />
       </label>
-      <button onClick={() => setIsFetching(true)}>Fetch</button>
+      <button
+        onClick={() => {
+          setIsError(false);
+          setIsFetching(true);
+        }}
+      >
+        Fetch
+      </button>
+
       <IndexOverview
         isFetching={isFetching}
         setIsFetching={setIsFetching}
+        setIsError={setIsError}
         token={token}
       />
+      {isError && (
+        <div
+          style={{
+            backgroundColor: "lightpink",
+            color: "firebrick",
+            margin: ".25rem",
+            padding: ".5rem",
+          }}
+        >
+          Error: Failed to fetch data! Try again with a valid token or check
+          console for more details.
+        </div>
+      )}
     </div>
   );
 }
