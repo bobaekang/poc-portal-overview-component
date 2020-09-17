@@ -22,6 +22,7 @@ function IndexOverview({ isFetching, setIsFetching, setIsError, token }) {
         .then(({ data }) => setSubject(data._inrg_count))
         .catch((e) => {
           setIsError(true);
+          setSubject(0);
           console.error(e);
         })
         .finally(() => setIsFetching(false));
