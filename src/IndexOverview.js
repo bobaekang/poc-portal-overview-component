@@ -14,7 +14,7 @@ function fetchData({ token, query }) {
 }
 
 function IndexOverview({ isFetching, setIsFetching, setIsError, token }) {
-  const [subject, setSubject] = useState(0);
+  const [subject, setSubject] = useState(-1);
 
   useEffect(() => {
     if (isFetching)
@@ -22,7 +22,7 @@ function IndexOverview({ isFetching, setIsFetching, setIsError, token }) {
         .then(({ data }) => setSubject(data._inrg_count))
         .catch((e) => {
           setIsError(true);
-          setSubject(0);
+          setSubject(-1);
           console.error(e);
         })
         .finally(() => setIsFetching(false));
@@ -37,7 +37,7 @@ function IndexOverview({ isFetching, setIsFetching, setIsError, token }) {
       }}
     >
       <h1>Overview</h1>
-      <h2>Subjects: {subject}</h2>
+      <h2>Subjects: {subject < 0 ? "N/A" : subject}</h2>
     </div>
   );
 }
